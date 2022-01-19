@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      target: command
+    command: run dockercmd:start:debug
+    restart: always
+    environment:
+      POSTGRES_HOST: postgres
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - '9229:9229'
+      - '3000:3000'
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
